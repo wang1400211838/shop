@@ -71,9 +71,9 @@ mysql建表约束：
 mysql表结构：
 	1、查看表结构：DESCRIBE 表名 / DESC 表名
 	2、修改表结构：ALTER TABLE 表名
-	3、添加表结构：ADD
-	4、删除表结构：DROP
-	5、修改字段、添加约束：MODIFY
+	3、添加表结构：ADD	 ---> alter table person add primary key(id);
+	4、删除表结构：DROP  --->alter table person drop primary key;
+	5、修改字段、添加约束：MODIFY  （alter table person modify id int primary;）
 
 ---------------------------------------------------------------------------------------------------------------------------------
 
@@ -106,4 +106,54 @@ mysql查询：
 
 ---------------------------------------------------------------------------------------------------------------------------------
 
-sql的四种连接方法
+sql的四种连接查询方法
+	1、内连接： inner join 或者 join (内联查询其实就是两张表中数据，通过某个字段相对，查询出相关记录数据)
+		
+		select * from person inner join card on person.cardID=card.id;
+
+	2、左连接： right join 或者  right outer join （左外连接，会把左边表里的所有数据取出来，而右边表中的数据，如果有相等的，就显示出来，没有的话就会补null）
+		select * from person left join card on person.cardId=card.id;
+	3、右连接： left join  或者 left outer join （右外连接，会把右边表里的所有数据取出来，而左边表中的数据，如果有相等的，就显示出来，没有的话就会补null）
+		select * from person right join card on person.cardId=card.id;
+	4、外连接： full join  或者 full outer join	（全部数据显示出来，没有的话就会补null）
+		select * from person left join card on person.cardId=card.id
+		union
+		select * from person right join card on person.cardId=card.id;
+		
+---------------------------------------------------------------------------------------------------------------------------------
+
+mysql事务：
+	1、mysql中，事务其实是一个最小的不可分割的工作单元，事务能够保证一个业务的完整性。
+	2、mysql是默认开启事务的（自动提交）
+	3、默认开启的作用是什么：当我们去执行一个sql语句的时候，效果会立即体现出来，且不会回滚。
+	4、回滚：rollback;
+	5、设置mysql自动提交为false:  set autocommit=0;
+	6、提交： commit; （持久性）
+	7、手动开启事务： begin 或者 start transaction;
+
+---------------------------------------------------------------------------------------------------------------------------------
+
+事务的四大特征：
+	a、原子性：事务是最小的单位，不可以在分割
+	b、一致性：事务要求，同一事务中的 sql 语句，必须保证同时成功或者同事失败。
+	c、隔离性：事务1 和 事务2 之间是具有隔离性的
+	d、持久性：事务一旦结束（commit,rollback）,就不可以返回
+
+事务开启：
+	1、修改默认提交： set autocommit=0;
+	2、begin;
+	3、start transaction;
+	4、事务提交：commit;
+	5、事务的手动回滚： rollback;
+
+事务的隔离性：
+	1.read uncommitted;	读未提交
+	2、read committed;		读已经提交的
+	3、repeatable read;		可以重复读
+	4、serializable;		串行化
+
+	-1：如果有事务a 和 事务n ，
+	a这个事务对数据进行操作
+
+如何修改隔离级别：	
+	set transaction isolation level read uncommitted;
