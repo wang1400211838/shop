@@ -90,3 +90,7 @@ mysql查询：
 	3、表示或者关系的查询 in();
 	4、表示或者 or;
 	5、表示 与  and;
+	6、降序查询：order by ....desc;
+	7、升序查询：order by ... asc;
+	8、统计查询： count(*);
+	9、查询最大值： max();
